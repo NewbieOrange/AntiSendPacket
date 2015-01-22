@@ -33,7 +33,7 @@ public class CheckTask implements Runnable {
 	}
 
 	private void checkKickBan(NetworkManager manager, int i) {
-		if (i > 256) {
+		if (i > 64) {
 			InetSocketAddress addr = (InetSocketAddress) manager.getSocketAddress();
 			String host = addr.getAddress().getHostAddress();
 			this.plugin.getLogger().info("封禁 " + host + " 检测到强烈攻击行为");
