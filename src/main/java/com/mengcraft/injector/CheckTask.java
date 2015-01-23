@@ -2,6 +2,8 @@ package com.mengcraft.injector;
 
 import java.lang.reflect.Field;
 import java.net.InetSocketAddress;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Queue;
 
@@ -13,18 +15,23 @@ import org.bukkit.plugin.Plugin;
 
 public class CheckTask implements Runnable {
 
+	private final BannerLogger logger;
+
 	private final List<NetworkManager> managers;
 	private final Plugin plugin;
 	private final int _kick;
 	private final int _ban;
 	private final BanIpCommand banner;
 	private final PardonIpCommand unbanner;
+	private final SimpleDateFormat format;
 	private Field input;
 	private Field output;
 
 	public CheckTask(List<NetworkManager> managers, Plugin plugin) {
+		this.logger = BannerLogger.getLogger();
 		this.managers = managers;
 		this.plugin = plugin;
+		this.format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		this._kick = plugin.getConfig().getInt("limit.kick", 128);
 		this._ban = plugin.getConfig().getInt("limit.ban", 256);
 		this.banner = new BanIpCommand();
@@ -47,19 +54,25 @@ public class CheckTask implements Runnable {
 			String host = addr.getAddress().getHostAddress();
 			this.plugin.getLogger().info("封禁 " + host + " 检测到强烈攻击行为");
 			ban(host);
+			this.logger.log("ban: " + host + ", reason: " + i + ", date:" + getFormatedData() + "\n");
 		} else if (i > this._kick) {
 			InetSocketAddress addr = (InetSocketAddress) manager.getSocketAddress();
 			String host = addr.getAddress().getHostAddress();
 			this.plugin.getLogger().info("踢出 " + host + " 检测到轻度攻击行为");
 			ban(host);
 			unban(host);
+			this.logger.log("kick: " + host + ", reason: " + i + ", date:" + getFormatedData() + "\n");
 		}
+	}
+
+	private String getFormatedData() {
+		return this.format.format(new Date());
 	}
 
 	private void ban(String... host) {
 		this.banner.execute(this.plugin.getServer().getConsoleSender(), null, host);
 	}
-	
+
 	private void unban(String... host) {
 		this.unbanner.execute(this.plugin.getServer().getConsoleSender(), null, host);
 	}
