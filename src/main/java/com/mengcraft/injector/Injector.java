@@ -6,7 +6,13 @@ public class Injector extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		getServer().getScheduler().runTaskTimer(this, new CheckTask(), 20, 20);
+		String version = getServer().getVersion();
+		if (version.contains("MCPC")) {
+			getLogger().info("Not support MCPC server yet.");
+			setEnabled(false);
+		} else {
+			getServer().getScheduler().runTaskTimer(this, new CheckTask(), 20, 20);
+		}
 	}
 
 }
