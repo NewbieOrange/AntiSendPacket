@@ -2,8 +2,8 @@ package com.mengcraft.injector;
 
 import java.util.List;
 
-import net.minecraft.server.v1_7_R4.EntityPlayer;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
+import net.minecraft.server.v1_7_R1.EntityPlayer;
+import net.minecraft.server.v1_7_R1.MinecraftServer;
 
 public class CheckTask implements Runnable {
 

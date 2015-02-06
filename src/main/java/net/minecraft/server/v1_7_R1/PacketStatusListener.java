@@ -1,12 +1,26 @@
-package net.minecraft.server.v1_7_R4;
+package net.minecraft.server.v1_7_R1;
 
 import java.net.InetSocketAddress;
 import java.util.Iterator;
 
+import net.minecraft.server.v1_7_R1.ChatComponentText;
+import net.minecraft.server.v1_7_R1.EntityPlayer;
+import net.minecraft.server.v1_7_R1.EnumProtocol;
+import net.minecraft.server.v1_7_R1.IChatBaseComponent;
+import net.minecraft.server.v1_7_R1.MinecraftServer;
+import net.minecraft.server.v1_7_R1.NetworkManager;
+import net.minecraft.server.v1_7_R1.PacketStatusInListener;
+import net.minecraft.server.v1_7_R1.PacketStatusInPing;
+import net.minecraft.server.v1_7_R1.PacketStatusInStart;
+import net.minecraft.server.v1_7_R1.PacketStatusOutPong;
+import net.minecraft.server.v1_7_R1.PacketStatusOutServerInfo;
+import net.minecraft.server.v1_7_R1.ServerPing;
+import net.minecraft.server.v1_7_R1.ServerPingPlayerSample;
+import net.minecraft.server.v1_7_R1.ServerPingServerData;
 import net.minecraft.util.com.mojang.authlib.GameProfile;
 import net.minecraft.util.io.netty.util.concurrent.GenericFutureListener;
 
-import org.bukkit.craftbukkit.v1_7_R4.util.CraftIconCache;
+import org.bukkit.craftbukkit.v1_7_R1.util.CraftIconCache;
 import org.bukkit.entity.Player;
 
 public class PacketStatusListener implements PacketStatusInListener {
@@ -34,7 +48,8 @@ public class PacketStatusListener implements PacketStatusInListener {
 	@Override
 	public void a(PacketStatusInPing packetstatusinping) {
 		if (this.status != 1) {
-			this.manager.close(null);
+			IChatBaseComponent component = null;
+			this.manager.a(component);
 			System.out.println("检测到频率异常高的 MOTD 请求");
 			System.out.println("梦梦家服务器出租为您保驾护航");
 			return;
@@ -46,7 +61,8 @@ public class PacketStatusListener implements PacketStatusInListener {
 	@Override
 	public void a(PacketStatusInStart packetstatusinstart) {
 		if (this.status != 0) {
-			this.manager.close(null);
+			IChatBaseComponent component = null;
+			this.manager.a(component);
 			System.out.println("检测到频率异常高的 MOTD 请求");
 			System.out.println("梦梦家服务器出租为您保驾护航");
 			return;
@@ -63,7 +79,7 @@ public class PacketStatusListener implements PacketStatusInListener {
 			@Override
 			public void setServerIcon(org.bukkit.util.CachedServerIcon icon) {
 				if (!(icon instanceof CraftIconCache)) {
-					throw new IllegalArgumentException(icon + " was not created by " + org.bukkit.craftbukkit.v1_7_R4.CraftServer.class);
+					throw new IllegalArgumentException(icon + " was not created by " + org.bukkit.craftbukkit.v1_7_R1.CraftServer.class);
 				}
 				this.icon = (CraftIconCache) icon;
 			}
@@ -133,7 +149,7 @@ public class PacketStatusListener implements PacketStatusInListener {
 		ping.setFavicon(event.icon.value);
 		ping.setMOTD(new ChatComponentText(event.getMotd()));
 		ping.setPlayerSample(playerSample);
-		ping.setServerInfo(new ServerPingServerData(this.server.getServerModName() + " " + this.server.getVersion(), 5));
+		ping.setServerInfo(new ServerPingServerData(this.server.getServerModName() + " " + this.server.getVersion(), 4));
 
 		this.manager.handle(new PacketStatusOutServerInfo(ping));
 	}

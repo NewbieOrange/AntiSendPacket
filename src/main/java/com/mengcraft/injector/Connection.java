@@ -1,11 +1,11 @@
 package com.mengcraft.injector;
 
-import net.minecraft.server.v1_7_R4.EntityPlayer;
-import net.minecraft.server.v1_7_R4.MinecraftServer;
-import net.minecraft.server.v1_7_R4.NetworkManager;
-import net.minecraft.server.v1_7_R4.Packet;
-import net.minecraft.server.v1_7_R4.PacketPlayOutTabComplete;
-import net.minecraft.server.v1_7_R4.PlayerConnection;
+import net.minecraft.server.v1_7_R1.EntityPlayer;
+import net.minecraft.server.v1_7_R1.MinecraftServer;
+import net.minecraft.server.v1_7_R1.NetworkManager;
+import net.minecraft.server.v1_7_R1.Packet;
+import net.minecraft.server.v1_7_R1.PacketPlayOutTabComplete;
+import net.minecraft.server.v1_7_R1.PlayerConnection;
 
 public class Connection extends PlayerConnection {
 
