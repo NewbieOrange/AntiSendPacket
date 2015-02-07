@@ -3,8 +3,7 @@ package com.mengcraft.injector;
 import net.minecraft.server.v1_7_R4.EntityPlayer;
 import net.minecraft.server.v1_7_R4.MinecraftServer;
 import net.minecraft.server.v1_7_R4.NetworkManager;
-import net.minecraft.server.v1_7_R4.Packet;
-import net.minecraft.server.v1_7_R4.PacketPlayOutTabComplete;
+import net.minecraft.server.v1_7_R4.PacketPlayInTabComplete;
 import net.minecraft.server.v1_7_R4.PlayerConnection;
 
 public class Connection extends PlayerConnection {
@@ -16,17 +15,9 @@ public class Connection extends PlayerConnection {
 	}
 
 	@Override
-	public void sendPacket(Packet packet) {
-		if (packet instanceof PacketPlayOutTabComplete) {
-			checkSend(packet);
-		} else {
-			super.sendPacket(packet);
-		}
-	}
-
-	private void checkSend(Packet packet) {
+	public void a(PacketPlayInTabComplete packet) {
 		if (checkCount() < 16) {
-			super.sendPacket(packet);
+			super.a(packet);
 		} else {
 			disconnect("You are a cracker?");
 		}
