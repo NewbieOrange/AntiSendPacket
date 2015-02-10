@@ -19,8 +19,6 @@ public class Connection
     
     public void handlePacket(Object packet)
     {
-        System.out.println(count);
-        
         if (checkCount() < 16)
         {
             ReflectUtil.handlePacket(connection, packet);

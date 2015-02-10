@@ -4,7 +4,6 @@ import java.util.List;
 
 public class CheckTask implements Runnable
 {
-    
     @Override
     public void run()
     {
