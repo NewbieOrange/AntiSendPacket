@@ -95,16 +95,15 @@ public class ReflectUtil
         }
     }
     
-    public static Connection getConnection(Object player)
+    public static Connection getConnection(Object entityPlayer)
     {
-        Object playerConnection = ReflectUtil.getPlayerConnection(player);
+        Connection connection = Connection.getConnectionByEntityPlayer(entityPlayer);
         
-        if (playerConnection instanceof Connection)
-        {
-            return (Connection) playerConnection;
-        }
-        return new Connection(ReflectUtil.getPlayerServer(player),
-                ReflectUtil.getNetworkManager(playerConnection), player);
+        if (connection != null)
+            return connection;
+        else
+            return new Connection(getPlayerServer(entityPlayer),
+                    getNetworkManager(getPlayerConnection(entityPlayer)), entityPlayer);
     }
     
     public static Object getEntityPlayer(Player player)

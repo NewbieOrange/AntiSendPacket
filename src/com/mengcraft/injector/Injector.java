@@ -15,7 +15,7 @@ public class Injector extends JavaPlugin
         }
         
         PacketListener.register(this);
-        getServer().getScheduler().runTaskTimer(this, new CheckTask(), 20, 20);
+        getServer().getScheduler().runTaskTimer(this, new CheckTask(), 20L, 20L);
     }
     
     @Override

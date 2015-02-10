@@ -1,18 +1,26 @@
 package com.mengcraft.injector;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Connection
 {
+    private static final Map<Object, Connection> connections = new HashMap<Object, Connection>();
+    
     private Object connection;
-    private int count;
+    private int count = 0;
     
     public Connection(Object minecraftserver, Object networkManager, Object entityPlayer)
     {
         connection = ReflectUtil.createPlayerConnection(minecraftserver, networkManager,
                 entityPlayer);
+        connections.put(entityPlayer, this);
     }
     
     public void handlePacket(Object packet)
     {
+        System.out.println(count);
+        
         if (checkCount() < 16)
         {
             ReflectUtil.handlePacket(connection, packet);
@@ -26,17 +34,21 @@ public class Connection
     
     private int checkCount()
     {
-        return this.count++;
+        return count++;
     }
     
     public int getCount()
     {
-        return this.count;
+        return count;
     }
     
     public void resetCount()
     {
-        this.count = 0;
+        count = 0;
     }
     
+    public static Connection getConnectionByEntityPlayer(Object entityPlayer)
+    {
+        return connections.get(entityPlayer);
+    }
 }
