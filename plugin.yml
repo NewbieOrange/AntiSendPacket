@@ -2,3 +2,4 @@ name: AntiSendPacket
 authors: [caoli5288, chengzi]
 main: com.mengcraft.injector.Injector
 version: 1.0.0
+depend: [ProtocolLib]
