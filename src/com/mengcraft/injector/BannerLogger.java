@@ -38,5 +38,4 @@ public class BannerLogger
     {
         return LOGGER;
     }
-    
 }
