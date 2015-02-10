@@ -1,8 +1,12 @@
 package com.mengcraft.injector;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class Injector extends JavaPlugin
+public class Injector extends JavaPlugin implements Listener
 {
     @Override
     public void onEnable()
@@ -15,6 +19,7 @@ public class Injector extends JavaPlugin
         }
         
         PacketListener.register(this);
+        getServer().getPluginManager().registerEvents(this, this);
         getServer().getScheduler().runTaskTimer(this, new CheckTask(), 20L, 20L);
     }
     
@@ -22,5 +27,19 @@ public class Injector extends JavaPlugin
     public void onDisable()
     {
         PacketListener.remove();
+    }
+    
+    @EventHandler
+    public void onPlayerQuiting(PlayerQuitEvent event)
+    {
+        Connection
+                .removeConnectionInCache(ReflectUtil.getEntityPlayer(event.getPlayer()));
+    }
+    
+    @EventHandler
+    public void onPlayerBeingKicked(PlayerKickEvent event)
+    {
+        Connection
+                .removeConnectionInCache(ReflectUtil.getEntityPlayer(event.getPlayer()));
     }
 }

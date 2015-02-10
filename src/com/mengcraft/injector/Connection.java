@@ -49,4 +49,9 @@ public class Connection
     {
         return connections.get(entityPlayer);
     }
+    
+    public static void removeConnectionInCache(Object entityPlayer)
+    {
+        connections.remove(entityPlayer);
+    }
 }
