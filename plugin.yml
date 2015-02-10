@@ -1,3 +1,4 @@
 name: AntiSendPacket
+authors: [caoli5288, chengzi]
 main: com.mengcraft.injector.Injector
-version: 0.1.0
+version: 1.0.0
