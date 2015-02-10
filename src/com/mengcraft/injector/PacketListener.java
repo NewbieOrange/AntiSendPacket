@@ -26,4 +26,9 @@ public class PacketListener
         
         ProtocolLibrary.getProtocolManager().addPacketListener(tabCompleteListener);
     }
+    
+    public static void remove()
+    {
+        ProtocolLibrary.getProtocolManager().removePacketListener(tabCompleteListener);
+    }
 }

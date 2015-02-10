@@ -4,7 +4,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Injector extends JavaPlugin
 {
-    
     @Override
     public void onEnable()
     {
@@ -14,7 +13,14 @@ public class Injector extends JavaPlugin
             setEnabled(false);
             return;
         }
+        
+        PacketListener.register(this);
         getServer().getScheduler().runTaskTimer(this, new CheckTask(), 20, 20);
     }
     
+    @Override
+    public void onDisable()
+    {
+        PacketListener.remove();
+    }
 }
